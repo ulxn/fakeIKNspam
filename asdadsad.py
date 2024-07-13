@@ -13,7 +13,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 fake = Faker()
 
 # Loop to perform the sequence 5 times
-for j in range(3000):
+for j in range(1000000):
     
     # Open a new tab with the same website
     driver.execute_script("window.open('about:blank', 'new_tab');")
