@@ -11,28 +11,30 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 # Create an instance of Faker
 fake = Faker()
 
-# Loop to perform the sequence 5 times
+# Loop
 for j in range(1000000):
 
     # Open the website
-    driver.get("yourlink")
+    driver.get("yoursite")
 
-    # Generate new set of 5 random words
-    random_name_words = [fake.word() for _ in range(5)]
-    random_nip_words = [fake.word() for _ in range(5)]
-    random_email_words = [fake.word() for _ in range(5)]
+    # Generate set of 5 random words
+    random_name = " ".join(fake.words(6))
+    random_nip = " ".join(fake.words(6))
+    random_email = " ".join(fake.words(6))
 
-    # Fill and submit form
+    # Find the field element
     name_field = driver.find_element(By.NAME, "login")
     nip_field = driver.find_element(By.ID, "password")
     email_field = driver.find_element(By.ID, "emai")
+    submit_button = driver.find_element(By.CSS_SELECTOR, "a.btn.btn-primary.btn-block.js-sign-in-button")
 
-    name_field.send_keys(" ".join(random_name_words))
-    nip_field.send_keys(" ".join(random_nip_words))
-    email_field.send_keys(" ".join(random_email_words))
+    # Fill the form
+    name_field.send_keys(random_name)
+    nip_field.send_keys(random_nip)
+    email_field.send_keys(random_email)
 
-    submit_button_new_tab = driver.find_element(By.CSS_SELECTOR, "a.btn.btn-primary.btn-block.js-sign-in-button")
-    submit_button_new_tab.click()
+    # Submit the form
+    submit_button.click()
 
 # # Add a 5-second delay before quitting
 # time.sleep(5)
