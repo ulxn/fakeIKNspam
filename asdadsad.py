@@ -15,7 +15,7 @@ fake = Faker()
 for j in range(1000000):
 
     # Open the website
-    driver.get("yoursite")
+    driver.get("yourlink")
 
     # Generate set of 5 random words
     random_name = " ".join(fake.words(6))
