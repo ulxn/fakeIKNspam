@@ -3,44 +3,36 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from faker import Faker
+# import time
 
-# initialize the Chrome driver using WebDriver Manager
+# Initialize the Chrome driver using WebDriver Manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-# create an instance of Faker
+# Create an instance of Faker
 fake = Faker()
 
-# open the target website
-driver.get("yourlink")
+# Loop to perform the sequence 5 times
+for j in range(1000000):
 
-# locate the fields and submit button once, outside the loop
-name_field = driver.find_element(By.NAME, "login")
-nip_field = driver.find_element(By.ID, "password")
-email_field = driver.find_element(By.ID, "emai")
-submit_button = driver.find_element(By.CSS_SELECTOR, "a.btn.btn-primary.btn-block.js-sign-in-button")
-
-# loop
-for _ in range(1000000):
-    # Generate new set of 5 random words
-    random_name = " ".join(fake.words(5))
-    random_nip = " ".join(fake.words(5))
-    random_email = " ".join(fake.words(5))
-    
-    # Clear the fields before entering new data
-    name_field.clear()
-    nip_field.clear()
-    email_field.clear()
-    
-    # Fill the form fields
-    name_field.send_keys(random_name)
-    nip_field.send_keys(random_nip)
-    email_field.send_keys(random_email)
-    
-    # Submit the form
-    submit_button.click()
-    
-    # Reopen the target website after submission to reset the form
+    # Open the website
     driver.get("yourlink")
+
+    # Generate new set of 5 random words
+    random_name_words = [fake.word() for _ in range(5)]
+    random_nip_words = [fake.word() for _ in range(5)]
+    random_email_words = [fake.word() for _ in range(5)]
+
+    # Fill and submit form
+    name_field = driver.find_element(By.NAME, "login")
+    nip_field = driver.find_element(By.ID, "password")
+    email_field = driver.find_element(By.ID, "emai")
+
+    name_field.send_keys(" ".join(random_name_words))
+    nip_field.send_keys(" ".join(random_nip_words))
+    email_field.send_keys(" ".join(random_email_words))
+
+    submit_button_new_tab = driver.find_element(By.CSS_SELECTOR, "a.btn.btn-primary.btn-block.js-sign-in-button")
+    submit_button_new_tab.click()
 
 # # Add a 5-second delay before quitting
 # time.sleep(5)
